@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Crypto Converter</string>
+    <string name="value">Value</string>
+    <string name="convert_from">From:</string>
+    <string name="convert_to">To:</string>
+    <string name="convert">Convert</string>
 </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Crypto Converter</string>
+    <string name="value">Valor</string>
+    <string name="convert_from">De:</string>
+    <string name="convert_to">Para:</string>
+    <string name="convert">Converter</string>
+</resources>
