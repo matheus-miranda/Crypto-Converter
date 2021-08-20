@@ -4,4 +4,5 @@
     <string name="convert_from">From:</string>
     <string name="convert_to">To:</string>
     <string name="convert">Convert</string>
+    <string name="currency_symbol">currency symbol</string>
 </resources>

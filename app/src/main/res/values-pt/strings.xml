@@ -5,4 +5,5 @@
     <string name="convert_from">De:</string>
     <string name="convert_to">Para:</string>
     <string name="convert">Converter</string>
+    <string name="currency_symbol">simbolo da moeda</string>
 </resources>
