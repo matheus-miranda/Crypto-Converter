@@ -1,4 +1,4 @@
-package br.com.msmlabs.cryptoconverter.data.model
+package br.com.msmlabs.cryptoconverter.data.model.types
 
 enum class Fiat {
     AUD,

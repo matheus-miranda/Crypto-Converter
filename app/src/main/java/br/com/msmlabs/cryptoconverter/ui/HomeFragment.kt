@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import br.com.msmlabs.cryptoconverter.R
-import br.com.msmlabs.cryptoconverter.data.model.Crypto
-import br.com.msmlabs.cryptoconverter.data.model.Fiat
+import br.com.msmlabs.cryptoconverter.data.model.types.Crypto
+import br.com.msmlabs.cryptoconverter.data.model.types.Fiat
 import br.com.msmlabs.cryptoconverter.data.model.spinner.Currency
 import br.com.msmlabs.cryptoconverter.databinding.FragmentHomeBinding
 import br.com.msmlabs.cryptoconverter.presentation.adapter.CurrencyArrayAdapter
