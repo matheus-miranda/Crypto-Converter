@@ -2,6 +2,7 @@ package br.com.msmlabs.cryptoconverter
 
 import android.app.Application
 import br.com.msmlabs.cryptoconverter.data.di.DataModules
+import br.com.msmlabs.cryptoconverter.domain.di.DomainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -15,5 +16,6 @@ class App : Application() {
         }
 
         DataModules.load()
+        DomainModule.load()
     }
 }
