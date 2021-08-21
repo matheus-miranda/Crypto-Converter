@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.msmlabs.cryptoconverter.data.model.GeckoAPIResponse
+import br.com.msmlabs.cryptoconverter.data.model.GeckoApiResponse
 import br.com.msmlabs.cryptoconverter.domain.usecase.GetExchangeValueUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -42,7 +42,7 @@ class HomeViewModel(private val getValueUseCase: GetExchangeValueUseCase) : View
     sealed class State {
         object Loading : State()
 
-        data class Success(val value: GeckoAPIResponse) : State()
+        data class Success(val value: GeckoApiResponse) : State()
         data class Error(val throwable: Throwable) : State()
     }
 }
