@@ -16,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object DataModules {
 
     private const val HTTP_TAG = "okHttp"
+    private const val BASE_URL = "https://api.coingecko.com/api/v3/coins/"
 
     /**
      * Loads all dependencies for the Data module
@@ -64,7 +65,7 @@ object DataModules {
         factory: GsonConverterFactory
     ): T {
         return Retrofit.Builder()
-            .baseUrl("https://api.coingecko.com/api/v3/coins/markets?vs_currency=")
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(factory)
             .build()

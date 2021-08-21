@@ -1,22 +1,29 @@
 package br.com.msmlabs.cryptoconverter.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import br.com.msmlabs.cryptoconverter.R
+import br.com.msmlabs.cryptoconverter.core.createDialog
+import br.com.msmlabs.cryptoconverter.core.createProgressDialog
+import br.com.msmlabs.cryptoconverter.data.model.spinner.Currency
 import br.com.msmlabs.cryptoconverter.data.model.types.Crypto
 import br.com.msmlabs.cryptoconverter.data.model.types.Fiat
-import br.com.msmlabs.cryptoconverter.data.model.spinner.Currency
 import br.com.msmlabs.cryptoconverter.databinding.FragmentHomeBinding
 import br.com.msmlabs.cryptoconverter.presentation.adapter.CurrencyArrayAdapter
+import br.com.msmlabs.cryptoconverter.presentation.viewmodel.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: HomeViewModel by viewModel()
+    private val dialog by lazy { requireContext().createProgressDialog() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +33,7 @@ class HomeFragment : Fragment() {
 
         bindAdapters()
         bindListeners()
+        inscribeObservers()
 
         return binding.root
     }
@@ -85,6 +93,29 @@ class HomeFragment : Fragment() {
                 binding.btnConvert.isEnabled = text.isNotEmpty()
             }
         }
+    }
+
+    /**
+     * Observer methods
+     */
+    private fun inscribeObservers() {
+        viewModel.getValues("brl", "bitcoin")
+
+        viewModel.state.observe(viewLifecycleOwner, {
+            when (it) {
+                HomeViewModel.State.Loading -> dialog.show()
+                is HomeViewModel.State.Error -> {
+                    dialog.dismiss()
+                    requireContext().createDialog {
+                        setMessage(it.throwable.message)
+                    }.show()
+                }
+                is HomeViewModel.State.Success -> {
+                    dialog.dismiss()
+                    Log.e("HomeFragment", "onCreate: ${it.value}")
+                }
+            }
+        })
     }
 
     override fun onDestroyView() {

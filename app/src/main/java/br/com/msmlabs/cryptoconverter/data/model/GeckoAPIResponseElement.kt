@@ -2,7 +2,9 @@ package br.com.msmlabs.cryptoconverter.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class GeckoApiResponse(
+typealias GeckoAPIResponse = ArrayList<GeckoAPIResponseElement>
+
+data class GeckoAPIResponseElement(
     val id: String,
 
     @SerializedName("current_price")
