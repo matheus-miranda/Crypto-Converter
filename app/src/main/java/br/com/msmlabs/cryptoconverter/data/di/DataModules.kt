@@ -1,7 +1,9 @@
 package br.com.msmlabs.cryptoconverter.data.di
 
 import android.util.Log
+import br.com.msmlabs.cryptoconverter.data.repositoryimpl.CryptoRepositoryImpl
 import br.com.msmlabs.cryptoconverter.data.services.CoinGeckoApi
+import br.com.msmlabs.cryptoconverter.domain.repository.CryptoRepository
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,7 +21,7 @@ object DataModules {
      * Loads all dependencies for the Data module
      */
     fun load() {
-        loadKoinModules(networkModule())
+        loadKoinModules(networkModule() + repositoryModule())
     }
 
     private fun networkModule(): Module {
@@ -44,6 +46,15 @@ object DataModules {
 
             single {
                 createService<CoinGeckoApi>(client = get(), factory = get())
+            }
+        }
+    }
+
+    private fun repositoryModule(): Module {
+
+        return module {
+            factory<CryptoRepository> {
+                CryptoRepositoryImpl(service = get())
             }
         }
     }
