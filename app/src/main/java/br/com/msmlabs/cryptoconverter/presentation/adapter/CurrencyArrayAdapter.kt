@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import br.com.msmlabs.cryptoconverter.R
-import br.com.msmlabs.cryptoconverter.data.model.spinner.Currency
+import br.com.msmlabs.cryptoconverter.presentation.enitity.Currency
 
 /**
  * Custom class extending ArrayAdapter so we can add the images and text to each row on the spinner

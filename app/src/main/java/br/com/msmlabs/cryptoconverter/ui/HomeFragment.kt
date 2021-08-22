@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment
 import br.com.msmlabs.cryptoconverter.R
 import br.com.msmlabs.cryptoconverter.core.createDialog
 import br.com.msmlabs.cryptoconverter.core.createProgressDialog
-import br.com.msmlabs.cryptoconverter.data.model.spinner.Currency
+import br.com.msmlabs.cryptoconverter.core.hideSoftKeyboard
+import br.com.msmlabs.cryptoconverter.core.text
 import br.com.msmlabs.cryptoconverter.data.model.types.Crypto
 import br.com.msmlabs.cryptoconverter.data.model.types.Fiat
 import br.com.msmlabs.cryptoconverter.databinding.FragmentHomeBinding
 import br.com.msmlabs.cryptoconverter.presentation.adapter.CurrencyArrayAdapter
+import br.com.msmlabs.cryptoconverter.presentation.enitity.Currency
 import br.com.msmlabs.cryptoconverter.presentation.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -93,14 +95,36 @@ class HomeFragment : Fragment() {
                 binding.btnConvert.isEnabled = text.isNotEmpty()
             }
         }
+
+        binding.btnConvert.setOnClickListener {
+            it.hideSoftKeyboard()
+
+            // Get value from the TIL and pass it to the ViewModel
+            val fiat = binding.tilConvertFrom.text.lowercase()
+            val crypto = when (binding.tilConvertTo.text) {
+                "ADA" -> Crypto.ADA.cryptoName
+                "BCH" -> Crypto.BCH.cryptoName
+                "BTC" -> Crypto.BTC.cryptoName
+                "DASH" -> Crypto.DASH.cryptoName
+                "DOGE" -> Crypto.DOGE.cryptoName
+                "ETH" -> Crypto.ETH.cryptoName
+                "LTC" -> Crypto.LTC.cryptoName
+                "NEO" -> Crypto.NEO.cryptoName
+                "USDT" -> Crypto.USDT.cryptoName
+                "XLM" -> Crypto.XLM.cryptoName
+                "XMR" -> Crypto.XMR.cryptoName
+                else -> Crypto.XRP.cryptoName
+            }
+
+            Log.e("HomeFragment", "fiat = $fiat, crypto = $crypto")
+            viewModel.getValues(fiat,crypto)
+        }
     }
 
     /**
      * Observer methods
      */
     private fun inscribeObservers() {
-        viewModel.getValues("brl", "bitcoin")
-
         viewModel.state.observe(viewLifecycleOwner, {
             when (it) {
                 HomeViewModel.State.Loading -> dialog.show()

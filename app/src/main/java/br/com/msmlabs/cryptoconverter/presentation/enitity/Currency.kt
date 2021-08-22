@@ -1,4 +1,4 @@
-package br.com.msmlabs.cryptoconverter.data.model.spinner
+package br.com.msmlabs.cryptoconverter.presentation.enitity
 
 /**
  * This data class represents a single row in our spinner
