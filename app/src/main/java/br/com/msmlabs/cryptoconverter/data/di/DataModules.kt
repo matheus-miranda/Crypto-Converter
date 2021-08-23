@@ -1,12 +1,14 @@
 package br.com.msmlabs.cryptoconverter.data.di
 
 import android.util.Log
+import br.com.msmlabs.cryptoconverter.data.database.AppDatabase
 import br.com.msmlabs.cryptoconverter.data.repositoryimpl.CryptoRepositoryImpl
 import br.com.msmlabs.cryptoconverter.data.services.CoinGeckoApi
 import br.com.msmlabs.cryptoconverter.domain.repository.CryptoRepository
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -22,7 +24,7 @@ object DataModules {
      * Loads all dependencies for the Data module
      */
     fun load() {
-        loadKoinModules(networkModule() + repositoryModule())
+        loadKoinModules(networkModule() + repositoryModule() + databaseModule())
     }
 
     private fun networkModule(): Module {
@@ -56,6 +58,15 @@ object DataModules {
         return module {
             factory<CryptoRepository> {
                 CryptoRepositoryImpl(service = get())
+            }
+        }
+    }
+
+    private fun databaseModule(): Module {
+
+        return module {
+            single {
+                AppDatabase.getInstance(context = androidApplication())
             }
         }
     }

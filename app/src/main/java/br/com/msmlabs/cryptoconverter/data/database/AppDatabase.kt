@@ -9,6 +9,8 @@ import br.com.msmlabs.cryptoconverter.data.model.GeckoResponseEntity
 @Database(entities = [GeckoResponseEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
+    abstract fun exchangeDao(): ExchangeDao
+
     companion object {
         fun getInstance(context: Context): AppDatabase {
             return Room.databaseBuilder(
