@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import br.com.msmlabs.cryptoconverter.R
-import br.com.msmlabs.cryptoconverter.core.createDialog
-import br.com.msmlabs.cryptoconverter.core.createProgressDialog
-import br.com.msmlabs.cryptoconverter.core.hideSoftKeyboard
-import br.com.msmlabs.cryptoconverter.core.text
+import br.com.msmlabs.cryptoconverter.core.*
 import br.com.msmlabs.cryptoconverter.data.model.types.Crypto
 import br.com.msmlabs.cryptoconverter.data.model.types.Fiat
 import br.com.msmlabs.cryptoconverter.databinding.FragmentHomeBinding
@@ -76,12 +73,12 @@ class HomeFragment : Fragment() {
         )
 
         // Set array list adapter to the drop down spinner
-        binding.tvConvertFrom.setAdapter(fiatAdapter)
-        binding.tvConvertTo.setAdapter(cryptoAdapter)
+        binding.tvConvertFrom.setAdapter(cryptoAdapter)
+        binding.tvConvertTo.setAdapter(fiatAdapter)
 
         // Pre-selected values
-        binding.tvConvertFrom.setText(Fiat.BRL.name, false)
-        binding.tvConvertTo.setText(Crypto.BTC.name, false)
+        binding.tvConvertFrom.setText(Crypto.BTC.name, false)
+        binding.tvConvertTo.setText(Fiat.BRL.name, false)
     }
 
     /**
@@ -102,34 +99,42 @@ class HomeFragment : Fragment() {
             val (fiat, crypto) = getTilValues()
             viewModel.getValues(fiat, crypto)
         }
+
+        // Hide the keyboard when user clicks on either TILs
+        binding.tvConvertFrom.setOnClickListener {
+            it.hideSoftKeyboard()
+        }
+        binding.tvConvertTo.setOnClickListener {
+            it.hideSoftKeyboard()
+        }
     }
 
     /**
      * Observer methods
      */
     private fun bindObservers() {
-        viewModel.state.observe(viewLifecycleOwner, {
-            when (it) {
+        viewModel.state.observe(viewLifecycleOwner, { state ->
+            when (state) {
                 HomeViewModel.State.Loading -> dialog.show()
                 is HomeViewModel.State.Error -> {
                     dialog.dismiss()
                     requireContext().createDialog {
-                        setMessage(it.throwable.message)
+                        setMessage(state.throwable.message)
                     }.show()
                 }
                 is HomeViewModel.State.Success -> {
-                    dialog.dismiss()
-                    // Assign the result text view to the current price multiplied by the value entered
-                    binding.tvResult.text =
-                        (it.value[0].currentPrice * binding.tilValue.text.toDouble()).toString()
+                    success(state)
                 }
             }
         })
     }
 
+    /**
+     * Returns value from the TILs
+     */
     private fun getTilValues(): Pair<String, String> {
-        val fiat = binding.tilConvertFrom.text.lowercase()
-        val crypto = when (binding.tilConvertTo.text) {
+        val fiat = binding.tilConvertTo.text.lowercase()
+        val crypto = when (binding.tilConvertFrom.text) {
             "ADA" -> Crypto.ADA.cryptoName
             "BCH" -> Crypto.BCH.cryptoName
             "BTC" -> Crypto.BTC.cryptoName
@@ -144,6 +149,23 @@ class HomeFragment : Fragment() {
             else -> Crypto.XRP.cryptoName
         }
         return Pair(fiat, crypto)
+    }
+
+    /**
+     * Sets the result text view on a successful API call
+     */
+    private fun success(state: HomeViewModel.State.Success) {
+        dialog.dismiss()
+
+        // Assign the result text view to the current price multiplied by the value entered
+        val result = binding.tilValue.text.toDouble() * state.exchangeValue[0].currentPrice
+
+        // Get the fiat currency according to what the user chose
+        val selectedFiat = binding.tilConvertTo.text
+        val fiat = Fiat.values().find { it.name == selectedFiat } ?: Fiat.AUD
+
+        // Set the result text view with the formatted currency locale
+        binding.tvResult.text = result.formatCurrency(fiat.locale)
     }
 
     override fun onDestroyView() {

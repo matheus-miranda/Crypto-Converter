@@ -42,7 +42,7 @@ class HomeViewModel(private val getValueUseCase: GetExchangeValueUseCase) : View
     sealed class State {
         object Loading : State()
 
-        data class Success(val value: GeckoApiResponse) : State()
+        data class Success(val exchangeValue: GeckoApiResponse) : State()
         data class Error(val throwable: Throwable) : State()
     }
 }
