@@ -1,7 +1,6 @@
 package br.com.msmlabs.cryptoconverter.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +34,7 @@ class HomeFragment : Fragment() {
 
         bindAdapters()
         bindListeners()
-        inscribeObservers()
+        bindObservers()
 
         return binding.root
     }
@@ -100,31 +99,15 @@ class HomeFragment : Fragment() {
             it.hideSoftKeyboard()
 
             // Get value from the TIL and pass it to the ViewModel
-            val fiat = binding.tilConvertFrom.text.lowercase()
-            val crypto = when (binding.tilConvertTo.text) {
-                "ADA" -> Crypto.ADA.cryptoName
-                "BCH" -> Crypto.BCH.cryptoName
-                "BTC" -> Crypto.BTC.cryptoName
-                "DASH" -> Crypto.DASH.cryptoName
-                "DOGE" -> Crypto.DOGE.cryptoName
-                "ETH" -> Crypto.ETH.cryptoName
-                "LTC" -> Crypto.LTC.cryptoName
-                "NEO" -> Crypto.NEO.cryptoName
-                "USDT" -> Crypto.USDT.cryptoName
-                "XLM" -> Crypto.XLM.cryptoName
-                "XMR" -> Crypto.XMR.cryptoName
-                else -> Crypto.XRP.cryptoName
-            }
-
-            Log.e("HomeFragment", "fiat = $fiat, crypto = $crypto")
-            viewModel.getValues(fiat,crypto)
+            val (fiat, crypto) = getTilValues()
+            viewModel.getValues(fiat, crypto)
         }
     }
 
     /**
      * Observer methods
      */
-    private fun inscribeObservers() {
+    private fun bindObservers() {
         viewModel.state.observe(viewLifecycleOwner, {
             when (it) {
                 HomeViewModel.State.Loading -> dialog.show()
@@ -136,10 +119,31 @@ class HomeFragment : Fragment() {
                 }
                 is HomeViewModel.State.Success -> {
                     dialog.dismiss()
-                    Log.e("HomeFragment", "onCreate: ${it.value}")
+                    // Assign the result text view to the current price multiplied by the value entered
+                    binding.tvResult.text =
+                        (it.value[0].currentPrice * binding.tilValue.text.toDouble()).toString()
                 }
             }
         })
+    }
+
+    private fun getTilValues(): Pair<String, String> {
+        val fiat = binding.tilConvertFrom.text.lowercase()
+        val crypto = when (binding.tilConvertTo.text) {
+            "ADA" -> Crypto.ADA.cryptoName
+            "BCH" -> Crypto.BCH.cryptoName
+            "BTC" -> Crypto.BTC.cryptoName
+            "DASH" -> Crypto.DASH.cryptoName
+            "DOGE" -> Crypto.DOGE.cryptoName
+            "ETH" -> Crypto.ETH.cryptoName
+            "LTC" -> Crypto.LTC.cryptoName
+            "NEO" -> Crypto.NEO.cryptoName
+            "USDT" -> Crypto.USDT.cryptoName
+            "XLM" -> Crypto.XLM.cryptoName
+            "XMR" -> Crypto.XMR.cryptoName
+            else -> Crypto.XRP.cryptoName
+        }
+        return Pair(fiat, crypto)
     }
 
     override fun onDestroyView() {
