@@ -5,5 +5,7 @@
     <string name="convert_from">De:</string>
     <string name="convert_to">Para:</string>
     <string name="convert">Converter</string>
-    <string name="currency_symbol">simbolo da moeda</string>
+    <string name="currency_symbol">Símbolo da moeda</string>
+    <string name="up_arrow">Flecha para cima</string>
+    <string name="down_arrow">Flecha para baixo</string>
 </resources>

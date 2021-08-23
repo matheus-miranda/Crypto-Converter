@@ -5,4 +5,7 @@
     <string name="convert_to">To:</string>
     <string name="convert">Convert</string>
     <string name="currency_symbol">currency symbol</string>
+    <string name="twenty_four_hour" translatable="false">24H</string>
+    <string name="up_arrow">Up arrow</string>
+    <string name="down_arrow">Down arrow</string>
 </resources>

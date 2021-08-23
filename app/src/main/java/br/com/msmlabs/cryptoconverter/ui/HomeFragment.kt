@@ -157,15 +157,26 @@ class HomeFragment : Fragment() {
     private fun success(state: HomeViewModel.State.Success) {
         dialog.dismiss()
 
-        // Assign the result text view to the current price multiplied by the value entered
+        // Assign the result to the current price multiplied by the value entered
         val result = binding.tilValue.text.toDouble() * state.exchangeValue[0].currentPrice
 
         // Get the fiat currency according to what the user chose
         val selectedFiat = binding.tilConvertTo.text
         val fiat = Fiat.values().find { it.name == selectedFiat } ?: Fiat.AUD
 
-        // Set the result text view with the formatted currency locale
-        binding.tvResult.text = result.formatCurrency(fiat.locale)
+        binding.apply {
+            // Set the result text view with the formatted currency locale
+            tvResult.text = result.formatCurrency(fiat.locale)
+
+            // Set the 24h high and low prices
+            tvHigh.text = state.exchangeValue[0].high24H.formatCurrency(fiat.locale)
+            tvLow.text = state.exchangeValue[0].low24H.formatCurrency(fiat.locale)
+
+            // Show the views
+            ivUpArrow.visibility = View.VISIBLE
+            ivDownArrow.visibility = View.VISIBLE
+            tv24h.visibility = View.VISIBLE
+        }
     }
 
     override fun onDestroyView() {
