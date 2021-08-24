@@ -162,7 +162,7 @@ class HomeFragment : Fragment() {
 
         // Get the fiat currency according to what the user chose
         val selectedFiat = binding.tilConvertTo.text
-        val fiat = Fiat.values().find { it.name == selectedFiat } ?: Fiat.AUD
+        val fiat = Fiat.getByName(selectedFiat)
 
         binding.apply {
             // Set the result text view with the formatted currency locale
