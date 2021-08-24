@@ -8,4 +8,6 @@
     <string name="twenty_four_hour" translatable="false">24H</string>
     <string name="up_arrow">Up arrow</string>
     <string name="down_arrow">Down arrow</string>
+    <string name="history">History</string>
+    <string name="about">About</string>
 </resources>

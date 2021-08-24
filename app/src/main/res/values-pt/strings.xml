@@ -8,4 +8,6 @@
     <string name="currency_symbol">Símbolo da moeda</string>
     <string name="up_arrow">Flecha para cima</string>
     <string name="down_arrow">Flecha para baixo</string>
+    <string name="history">Histórico</string>
+    <string name="about">Sobre</string>
 </resources>

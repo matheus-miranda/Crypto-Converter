@@ -1,11 +1,12 @@
 package br.com.msmlabs.cryptoconverter.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import br.com.msmlabs.cryptoconverter.R
 import br.com.msmlabs.cryptoconverter.core.*
 import br.com.msmlabs.cryptoconverter.data.model.types.Crypto
@@ -29,6 +30,8 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        setHasOptionsMenu(true)
         bindAdapters()
         bindListeners()
         bindObservers()
@@ -177,6 +180,16 @@ class HomeFragment : Fragment() {
             ivDownArrow.visibility = View.VISIBLE
             tv24h.visibility = View.VISIBLE
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.options_menu, menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item,requireView().findNavController())
+                || super.onOptionsItemSelected(item)
     }
 
     override fun onDestroyView() {

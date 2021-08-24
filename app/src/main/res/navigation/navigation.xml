@@ -10,4 +10,9 @@
         android:name="br.com.msmlabs.cryptoconverter.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="br.com.msmlabs.cryptoconverter.ui.HistoryFragment"
+        android:label="HistoryFragment"
+        tools:layout="@layout/fragment_history"/>
 </navigation>
