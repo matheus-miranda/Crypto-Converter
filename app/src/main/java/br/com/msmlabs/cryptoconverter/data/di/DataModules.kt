@@ -57,7 +57,7 @@ object DataModules {
 
         return module {
             factory<CryptoRepository> {
-                CryptoRepositoryImpl(service = get())
+                CryptoRepositoryImpl(service = get(), database = get())
             }
         }
     }
