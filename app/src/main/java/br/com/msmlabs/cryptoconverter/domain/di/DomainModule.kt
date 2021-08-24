@@ -1,5 +1,6 @@
 package br.com.msmlabs.cryptoconverter.domain.di
 
+import br.com.msmlabs.cryptoconverter.domain.usecase.DeleteAllFromDbUseCase
 import br.com.msmlabs.cryptoconverter.domain.usecase.GetExchangeValueUseCase
 import br.com.msmlabs.cryptoconverter.domain.usecase.ListAllFromDbUseCase
 import br.com.msmlabs.cryptoconverter.domain.usecase.SaveExchangeToDbUseCase
@@ -27,6 +28,10 @@ object DomainModule {
 
             factory {
                 ListAllFromDbUseCase(repository = get())
+            }
+
+            factory {
+                DeleteAllFromDbUseCase(repository = get())
             }
         }
     }

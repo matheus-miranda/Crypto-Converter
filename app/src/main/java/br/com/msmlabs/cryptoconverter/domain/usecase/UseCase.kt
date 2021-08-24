@@ -23,5 +23,9 @@ abstract class UseCase<Param, Source> {
         override suspend operator fun invoke(param: Params) = execute(param)
     }
 
+    abstract class NoParamOrSource : UseCase<None, None>() {
+        abstract override suspend fun execute(param: None): Flow<None>
+    }
+
     object None
 }
