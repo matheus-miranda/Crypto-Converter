@@ -152,20 +152,8 @@ class HomeFragment : Fragment() {
      */
     private fun getTilValues(): Pair<String, String> {
         val fiat = binding.tilConvertTo.text.lowercase()
-        val crypto = when (binding.tilConvertFrom.text) {
-            "ADA" -> Crypto.ADA.cryptoName
-            "BCH" -> Crypto.BCH.cryptoName
-            "BTC" -> Crypto.BTC.cryptoName
-            "DASH" -> Crypto.DASH.cryptoName
-            "DOGE" -> Crypto.DOGE.cryptoName
-            "ETH" -> Crypto.ETH.cryptoName
-            "LTC" -> Crypto.LTC.cryptoName
-            "NEO" -> Crypto.NEO.cryptoName
-            "USDT" -> Crypto.USDT.cryptoName
-            "XLM" -> Crypto.XLM.cryptoName
-            "XMR" -> Crypto.XMR.cryptoName
-            else -> Crypto.XRP.cryptoName
-        }
+        val crypto = Crypto.getByName(binding.tilConvertFrom.text)
+
         return Pair(fiat, crypto)
     }
 

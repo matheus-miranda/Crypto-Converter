@@ -12,5 +12,14 @@ enum class Crypto(val cryptoName: String) {
     USDT("tether"),
     XLM("stellar"),
     XMR("monero"),
-    XRP("ripple")
+    XRP("ripple");
+
+    companion object {
+        fun getByName(name: String): String {
+            val nameCrypto = values().find {
+                it.name == name
+            }  ?: ADA
+            return nameCrypto.cryptoName
+        }
+    }
 }
