@@ -1,5 +1,6 @@
 package br.com.msmlabs.cryptoconverter.presentation.di
 
+import br.com.msmlabs.cryptoconverter.presentation.viewmodel.HistoryViewModel
 import br.com.msmlabs.cryptoconverter.presentation.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
@@ -18,6 +19,10 @@ object PresentationModule {
 
             viewModel {
                 HomeViewModel(getValueUseCase = get())
+            }
+
+            viewModel {
+                HistoryViewModel(listAllUseCase = get())
             }
         }
     }
