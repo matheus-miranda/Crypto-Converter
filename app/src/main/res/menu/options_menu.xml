@@ -8,7 +8,7 @@
         android:title="@string/history"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/item_about"
+        android:id="@+id/aboutFragment"
         android:icon="@drawable/ic_info"
         android:title="@string/about"
         app:showAsAction="ifRoom" />
