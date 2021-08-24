@@ -12,6 +12,7 @@ class SaveExchangeToDbUseCase(
     override suspend fun execute(param: GeckoResponseEntity): Flow<Unit> {
         return flow {
             repository.saveToDb(param)
+            emit(Unit)
         }
     }
 }

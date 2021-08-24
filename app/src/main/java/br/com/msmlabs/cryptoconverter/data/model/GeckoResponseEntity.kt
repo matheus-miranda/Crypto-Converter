@@ -10,5 +10,5 @@ data class GeckoResponseEntity(
 
     val types: String,
 
-    val currentPrice: Double
+    val currentPrice: String
 )

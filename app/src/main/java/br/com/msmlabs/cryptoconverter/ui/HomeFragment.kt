@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import br.com.msmlabs.cryptoconverter.R
 import br.com.msmlabs.cryptoconverter.core.*
+import br.com.msmlabs.cryptoconverter.data.model.GeckoResponseEntity
 import br.com.msmlabs.cryptoconverter.data.model.types.Crypto
 import br.com.msmlabs.cryptoconverter.data.model.types.Fiat
 import br.com.msmlabs.cryptoconverter.databinding.FragmentHomeBinding
@@ -92,6 +93,7 @@ class HomeFragment : Fragment() {
         binding.tilValue.editText?.doAfterTextChanged { text ->
             if (text != null) {
                 binding.btnConvert.isEnabled = text.isNotEmpty()
+                binding.btnSave.isEnabled = false
             }
         }
 
@@ -101,6 +103,16 @@ class HomeFragment : Fragment() {
             // Get value from the TIL and pass it to the ViewModel
             val (fiat, crypto) = getTilValues()
             viewModel.getValues(fiat, crypto)
+        }
+
+        binding.btnSave.setOnClickListener {
+            val currentPrice = binding.tvResult.text.toString()
+            val crypto = binding.tilConvertFrom.text
+            val fiat = binding.tilConvertTo.text
+            val value = binding.etValue.text.toString()
+            val types = "$value $crypto / $fiat"
+            viewModel.saveToDb(GeckoResponseEntity(types = types, currentPrice = currentPrice))
+            binding.btnSave.isEnabled = false
         }
 
         // Hide the keyboard when user clicks on either TILs
@@ -127,6 +139,9 @@ class HomeFragment : Fragment() {
                 }
                 is HomeViewModel.State.Success -> {
                     success(state)
+                }
+                HomeViewModel.State.Saved -> {
+                    dialog.dismiss()
                 }
             }
         })
@@ -159,6 +174,7 @@ class HomeFragment : Fragment() {
      */
     private fun success(state: HomeViewModel.State.Success) {
         dialog.dismiss()
+        binding.btnSave.isEnabled = true
 
         // Assign the result to the current price multiplied by the value entered
         val result = binding.tilValue.text.toDouble() * state.exchangeValue[0].currentPrice
@@ -184,11 +200,10 @@ class HomeFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_menu, menu)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item,requireView().findNavController())
+        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController())
                 || super.onOptionsItemSelected(item)
     }
 

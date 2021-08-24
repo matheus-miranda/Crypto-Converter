@@ -27,15 +27,16 @@ class HistoryFragment : Fragment() {
     ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
-        with(binding) {
+        binding.apply {
             rvHistory.adapter = adapter
             rvHistory.addItemDecoration(
                 DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
             )
         }
+        viewModel.getAllExchanges()
         bindObservers()
 
-        lifecycle.addObserver(viewModel)
+        //lifecycle.addObserver(viewModel)
 
         return binding.root
     }
@@ -43,7 +44,9 @@ class HistoryFragment : Fragment() {
     private fun bindObservers() {
         viewModel.state.observe(viewLifecycleOwner, { state ->
             when (state) {
-                HistoryViewModel.State.Loading -> dialog.show()
+                HistoryViewModel.State.Loading -> {
+                    dialog.show()
+                }
                 is HistoryViewModel.State.Error -> {
                     dialog.dismiss()
                     requireContext().createDialog {

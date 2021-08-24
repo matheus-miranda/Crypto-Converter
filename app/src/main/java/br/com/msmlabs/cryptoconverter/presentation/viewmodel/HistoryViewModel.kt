@@ -17,8 +17,8 @@ class HistoryViewModel(
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> = _state
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    private fun getAllExchanges() {
+    //@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun getAllExchanges() {
 
         viewModelScope.launch {
             listAllUseCase()

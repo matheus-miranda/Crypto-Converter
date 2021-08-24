@@ -18,7 +18,7 @@ object PresentationModule {
         return module {
 
             viewModel {
-                HomeViewModel(getValueUseCase = get())
+                HomeViewModel(getValueUseCase = get(), saveToDbUseCase = get())
             }
 
             viewModel {

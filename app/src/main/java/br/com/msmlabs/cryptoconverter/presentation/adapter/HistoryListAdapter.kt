@@ -25,7 +25,7 @@ class HistoryListAdapter :
 
         fun bind(item: GeckoResponseEntity) {
             binding.tvName.text = item.types
-            binding.tvValue.text = item.currentPrice.toString()
+            binding.tvValue.text = item.currentPrice
         }
     }
 }

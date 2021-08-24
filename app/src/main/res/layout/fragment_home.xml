@@ -98,6 +98,17 @@
         app:layout_constraintStart_toStartOf="@id/guide_start"
         app:layout_constraintTop_toBottomOf="@id/til_convert_from" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_padding"
+        android:enabled="false"
+        android:text="@string/save"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintTop_toBottomOf="@id/btn_convert" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_result"
         android:layout_width="0dp"
@@ -108,7 +119,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/guide_end"
         app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintTop_toBottomOf="@id/btn_convert"
+        app:layout_constraintTop_toBottomOf="@id/btn_save"
         tools:text="$2,453.46" />
 
     <ImageView

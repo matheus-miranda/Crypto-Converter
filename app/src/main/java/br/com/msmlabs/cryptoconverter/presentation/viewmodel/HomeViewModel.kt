@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.msmlabs.cryptoconverter.data.model.GeckoApiResponse
+import br.com.msmlabs.cryptoconverter.data.model.GeckoResponseEntity
 import br.com.msmlabs.cryptoconverter.domain.usecase.GetExchangeValueUseCase
+import br.com.msmlabs.cryptoconverter.domain.usecase.SaveExchangeToDbUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -13,7 +15,10 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val getValueUseCase: GetExchangeValueUseCase) : ViewModel() {
+class HomeViewModel(
+    private val getValueUseCase: GetExchangeValueUseCase,
+    private val saveToDbUseCase: SaveExchangeToDbUseCase
+) : ViewModel() {
 
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> = _state
@@ -39,8 +44,25 @@ class HomeViewModel(private val getValueUseCase: GetExchangeValueUseCase) : View
         }
     }
 
+    fun saveToDb(entity: GeckoResponseEntity) {
+        viewModelScope.launch {
+            saveToDbUseCase(entity)
+                .flowOn(Dispatchers.Main)
+                .onStart {
+                    _state.value = State.Loading
+                }
+                .catch {
+                    _state.value = State.Error(it)
+                }
+                .collect {
+                    _state.value = State.Saved
+                }
+        }
+    }
+
     sealed class State {
         object Loading : State()
+        object Saved : State()
 
         data class Success(val exchangeValue: GeckoApiResponse) : State()
         data class Error(val throwable: Throwable) : State()
