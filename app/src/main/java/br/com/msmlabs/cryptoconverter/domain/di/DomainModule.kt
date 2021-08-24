@@ -1,6 +1,7 @@
 package br.com.msmlabs.cryptoconverter.domain.di
 
 import br.com.msmlabs.cryptoconverter.domain.usecase.GetExchangeValueUseCase
+import br.com.msmlabs.cryptoconverter.domain.usecase.SaveExchangeToDbUseCase
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -17,6 +18,10 @@ object DomainModule {
 
             factory {
                 GetExchangeValueUseCase(repository = get())
+            }
+
+            factory {
+                SaveExchangeToDbUseCase(repository = get())
             }
         }
     }
