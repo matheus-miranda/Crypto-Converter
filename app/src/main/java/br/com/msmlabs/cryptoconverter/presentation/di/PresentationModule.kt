@@ -22,7 +22,7 @@ object PresentationModule {
             }
 
             viewModel {
-                HistoryViewModel(listAllUseCase = get())
+                HistoryViewModel(listAllUseCase = get(), deleteAllFromDbUseCase = get())
             }
         }
     }

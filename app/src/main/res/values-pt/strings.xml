@@ -12,4 +12,5 @@
     <string name="about">Sobre</string>
     <string name="save">Salvar</string>
     <string name="about_text">Obrigado por usar o Crypto Converter.\nO limite atual é de 50 pesquisas por hora. Em breve você poderá expandir esse limite.\nSe a sua crypto moeda preferida não está listada, por favor clique abaixo e envie um e-mail ao desenvolvedor com pedidos e sugestões.</string>
+    <string name="clear_history">LImpar histórico</string>
 </resources>

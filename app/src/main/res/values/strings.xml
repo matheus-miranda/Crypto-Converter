@@ -13,4 +13,5 @@
     <string name="save">Save</string>
     <string name="about_text">Thank you for using Crypto Converter.\nIt is currently limited at 50 searches per hour. You will soon have an option to expand that limit.\nIf your favorite crypto isn\'t listed, please click below to e-mail the developer with any requests or suggestions.</string>
     <string name="email" translatable="false">Email</string>
+    <string name="clear_history">Clear history</string>
 </resources>
