@@ -10,21 +10,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/tb_about"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/back_icon"
+            android:focusable="true"
+            android:src="@drawable/ic_back_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/iv_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/extra_padding"
+            android:layout_marginTop="@dimen/layout_padding"
             android:importantForAccessibility="no"
             android:src="@drawable/crypto_about"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tb_about" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/layout_padding"
-            android:layout_marginTop="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/extra_padding"
             android:layout_marginEnd="@dimen/layout_padding"
             android:gravity="center"
             android:text="@string/about_text"
