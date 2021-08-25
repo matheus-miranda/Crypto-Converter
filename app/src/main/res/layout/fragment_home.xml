@@ -1,193 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.HomeFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/app_name" />
+        android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/extra_padding" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/extra_padding" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_value"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_padding"
-        android:hint="@string/value"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_value"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/app_name" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/extra_padding" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_convert_from"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_padding"
-        android:layout_marginEnd="@dimen/half_padding"
-        android:hint="@string/convert_from"
-        app:layout_constraintEnd_toStartOf="@id/til_convert_to"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintTop_toBottomOf="@id/til_value">
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/tv_convert_from"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:imeOptions="flagNoExtractUi"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/extra_padding" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_convert_to"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/half_padding"
-        android:layout_marginTop="@dimen/layout_padding"
-        android:hint="@string/convert_to"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintStart_toEndOf="@id/til_convert_from"
-        app:layout_constraintTop_toBottomOf="@id/til_value">
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/tv_convert_to"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_value"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:imeOptions="flagNoExtractUi"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="@dimen/layout_padding"
+            android:hint="@string/value"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_convert"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_padding"
-        android:enabled="false"
-        android:text="@string/convert"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintTop_toBottomOf="@id/til_convert_from" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:maxLength="15" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_save"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_padding"
-        android:enabled="false"
-        android:text="@string/save"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintTop_toBottomOf="@id/btn_convert" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_convert_from"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:layout_marginEnd="@dimen/half_padding"
+            android:hint="@string/convert_from"
+            app:layout_constraintEnd_toStartOf="@id/til_convert_to"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/til_value">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_result"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_padding"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintTop_toBottomOf="@id/btn_save"
-        tools:text="$2,453.46" />
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/tv_convert_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/iv_up_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_padding"
-        android:contentDescription="@string/up_arrow"
-        android:src="@drawable/ic_up_arrow"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/tv_high"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_result"
-        app:tint="@android:color/holo_green_dark"
-        tools:visibility="visible" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_convert_to"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/half_padding"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:hint="@string/convert_to"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toEndOf="@id/til_convert_from"
+            app:layout_constraintTop_toBottomOf="@id/til_value">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_high"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/half_padding"
-        app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
-        app:layout_constraintEnd_toStartOf="@+id/tv_24h"
-        app:layout_constraintStart_toEndOf="@+id/iv_up_arrow"
-        app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
-        tools:text="$2,800.43" />
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/tv_convert_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_24h"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/half_padding"
-        android:text="@string/twenty_four_hour"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
-        app:layout_constraintEnd_toStartOf="@+id/tv_low"
-        app:layout_constraintStart_toEndOf="@+id/tv_high"
-        app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
-        tools:visibility="visible" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_convert"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:enabled="false"
+            android:text="@string/convert"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/til_convert_from" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_low"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/half_padding"
-        app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
-        app:layout_constraintEnd_toStartOf="@+id/iv_down_arrow"
-        app:layout_constraintStart_toEndOf="@+id/tv_24h"
-        app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
-        tools:text="$1,888" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:enabled="false"
+            android:text="@string/save"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/btn_convert" />
 
-    <ImageView
-        android:id="@+id/iv_down_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/half_padding"
-        android:contentDescription="@string/down_arrow"
-        android:src="@drawable/ic_down_arrow"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintStart_toEndOf="@+id/tv_low"
-        app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
-        app:tint="@android:color/holo_red_dark"
-        tools:visibility="visible" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/btn_save"
+            tools:text="$2,453.46" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/iv_up_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:contentDescription="@string/up_arrow"
+            android:src="@drawable/ic_up_arrow"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/tv_high"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_result"
+            app:tint="@android:color/holo_green_dark"
+            tools:visibility="visible" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_high"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/half_padding"
+            app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
+            app:layout_constraintEnd_toStartOf="@+id/tv_24h"
+            app:layout_constraintStart_toEndOf="@+id/iv_up_arrow"
+            app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
+            tools:text="$2,800.43" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_24h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/half_padding"
+            android:text="@string/twenty_four_hour"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
+            app:layout_constraintEnd_toStartOf="@+id/tv_low"
+            app:layout_constraintStart_toEndOf="@+id/tv_high"
+            app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
+            tools:visibility="visible" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_low"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/half_padding"
+            app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
+            app:layout_constraintEnd_toStartOf="@+id/iv_down_arrow"
+            app:layout_constraintStart_toEndOf="@+id/tv_24h"
+            app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
+            tools:text="$1,888" />
+
+        <ImageView
+            android:id="@+id/iv_down_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/half_padding"
+            android:contentDescription="@string/down_arrow"
+            android:src="@drawable/ic_down_arrow"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toEndOf="@+id/tv_low"
+            app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
+            app:tint="@android:color/holo_red_dark"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

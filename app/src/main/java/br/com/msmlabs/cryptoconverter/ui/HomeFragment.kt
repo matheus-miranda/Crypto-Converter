@@ -40,6 +40,15 @@ class HomeFragment : Fragment() {
     }
 
     /**
+     * Required to bind the adapters to the spinners when navigating to another fragment or
+     * changing orientation
+     */
+    override fun onResume() {
+        super.onResume()
+        bindAdapters()
+    }
+
+    /**
      * Sets the toolbar as action bar
      */
     private fun bindToolbar() {
