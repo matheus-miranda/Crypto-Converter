@@ -22,14 +22,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/extra_padding" />
+            app:layout_constraintGuide_begin="@dimen/layout_padding" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/extra_padding" />
+            app:layout_constraintGuide_end="@dimen/layout_padding" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_value"
@@ -58,7 +58,9 @@
             android:layout_marginTop="@dimen/layout_padding"
             android:layout_marginEnd="@dimen/half_padding"
             android:hint="@string/convert_from"
-            app:layout_constraintEnd_toStartOf="@id/til_convert_to"
+            app:layout_constraintEnd_toStartOf="@+id/ib_swap"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="2.5"
             app:layout_constraintStart_toStartOf="@id/guide_start"
             app:layout_constraintTop_toBottomOf="@id/til_value">
 
@@ -71,6 +73,20 @@
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ib_swap"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="@dimen/half_padding"
+            android:scaleType="centerInside"
+            android:src="@drawable/swap_outline"
+            app:layout_constraintBottom_toBottomOf="@id/til_convert_from"
+            app:layout_constraintEnd_toStartOf="@+id/til_convert_to"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/til_convert_from"
+            app:layout_constraintTop_toTopOf="@id/til_convert_from" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_convert_to"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -80,7 +96,8 @@
             android:layout_marginTop="@dimen/layout_padding"
             android:hint="@string/convert_to"
             app:layout_constraintEnd_toEndOf="@id/guide_end"
-            app:layout_constraintStart_toEndOf="@id/til_convert_from"
+            app:layout_constraintHorizontal_weight="2.5"
+            app:layout_constraintStart_toEndOf="@+id/ib_swap"
             app:layout_constraintTop_toBottomOf="@id/til_value">
 
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
