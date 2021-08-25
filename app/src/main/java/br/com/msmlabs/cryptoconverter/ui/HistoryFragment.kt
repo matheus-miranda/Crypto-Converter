@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import br.com.msmlabs.cryptoconverter.core.createDialog
 import br.com.msmlabs.cryptoconverter.core.createProgressDialog
@@ -27,21 +29,25 @@ class HistoryFragment : Fragment() {
     ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
+        bindToolbar()
+        bindAdapter()
+        bindObservers()
+
+        return binding.root
+    }
+
+    private fun bindAdapter() {
         binding.apply {
             rvHistory.adapter = adapter
             rvHistory.addItemDecoration(
                 DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
             )
         }
-        viewModel.getAllExchanges()
-        bindObservers()
-
-        //lifecycle.addObserver(viewModel)
-
-        return binding.root
     }
 
     private fun bindObservers() {
+        viewModel.getAllExchanges()
+
         viewModel.state.observe(viewLifecycleOwner, { state ->
             when (state) {
                 HistoryViewModel.State.Loading -> {
@@ -59,6 +65,18 @@ class HistoryFragment : Fragment() {
                 }
             }
         })
+    }
+
+    /**
+     * Sets the toolbar as action bar
+     */
+    private fun bindToolbar() {
+        (activity as AppCompatActivity).setSupportActionBar(binding.tbHistory)
+        (activity as AppCompatActivity).supportActionBar?.title = ""
+
+        binding.icBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     override fun onDestroyView() {

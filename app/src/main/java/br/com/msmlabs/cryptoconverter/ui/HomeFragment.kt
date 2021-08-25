@@ -31,13 +31,20 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-        setHasOptionsMenu(true)
+        bindToolbar()
         bindAdapters()
         bindListeners()
         bindObservers()
 
         return binding.root
+    }
+
+    /**
+     * Sets the toolbar as action bar
+     */
+    private fun bindToolbar() {
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        setHasOptionsMenu(true)
     }
 
     /**
