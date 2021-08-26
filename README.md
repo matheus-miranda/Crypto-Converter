@@ -37,13 +37,6 @@ Uses Retrofit, Koin, Coroutines, Flow, LiveData, ViewModel, Fragments, Navigatio
  ## Screens
 <table style="width:100%">
   <tr>
-    <th>Home</th>
-    <th>Fiat Currencies</th>
-    <th>Conversion Result</th>
-    <th>Saved List</th>
-    <th>About</th>
-  </tr>
-  <tr>
     <th><img src="https://user-images.githubusercontent.com/15269393/130891885-d7c37fbe-5b36-4783-a897-1ee7e325a9a6.jpg"></th>
     <th><img src="https://user-images.githubusercontent.com/15269393/130891888-d8e47471-8a9c-488b-9f83-cda910ba2c50.jpg"></th>
     <th><img src="https://user-images.githubusercontent.com/15269393/130891892-3c8a0996-e3a2-458b-ade1-7010c598fc7b.jpg"></th>
