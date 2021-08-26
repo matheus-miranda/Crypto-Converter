@@ -23,6 +23,9 @@ class HomeViewModel(
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> = _state
 
+    // Indicates if the array adapters were swapped
+    var swapped: Boolean = false
+
     fun getValues(fiat: String, crypto: String) {
 
         viewModelScope.launch {

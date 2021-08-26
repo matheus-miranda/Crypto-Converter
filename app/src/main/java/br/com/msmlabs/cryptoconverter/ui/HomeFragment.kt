@@ -60,6 +60,17 @@ class HomeFragment : Fragment() {
      * Binds the array values to the currency drop down menus
      */
     private fun bindAdapters() {
+        val (fiatAdapter, cryptoAdapter) = createSpinnerArrayAdapters()
+
+        // Set array list adapter to the drop down spinner
+        binding.tvConvertFrom.setAdapter(cryptoAdapter)
+        binding.tvConvertTo.setAdapter(fiatAdapter)
+    }
+
+    /**
+     * Create custom array adapter for the spinner drop downs
+     */
+    private fun createSpinnerArrayAdapters(): Pair<CurrencyArrayAdapter, CurrencyArrayAdapter> {
         // Create custom array adapter for fiat currencies
         val fiatAdapter = CurrencyArrayAdapter(
             requireContext(),
@@ -91,14 +102,7 @@ class HomeFragment : Fragment() {
                 Currency(R.drawable.xrp_ripple, Crypto.XRP.toString())
             )
         )
-
-        // Set array list adapter to the drop down spinner
-        binding.tvConvertFrom.setAdapter(cryptoAdapter)
-        binding.tvConvertTo.setAdapter(fiatAdapter)
-
-        // Pre-selected values
-        binding.tvConvertFrom.setText(Crypto.BTC.name, false)
-        binding.tvConvertTo.setText(Fiat.BRL.name, false)
+        return Pair(fiatAdapter, cryptoAdapter)
     }
 
     /**
@@ -116,18 +120,33 @@ class HomeFragment : Fragment() {
         binding.btnConvert.setOnClickListener {
             it.hideSoftKeyboard()
 
-            // Get value from the TIL and pass it to the ViewModel
-            val (fiat, crypto) = getTilValues()
-            viewModel.getValues(fiat, crypto)
+            if (!viewModel.swapped) {
+                // Get value from the TIL and pass it to the ViewModel
+                val (fiat, crypto) = getTilValues()
+                viewModel.getValues(fiat, crypto)
+            } else {
+                val fiat = binding.tilConvertFrom.text.lowercase()
+                val crypto = Crypto.getByName(binding.tilConvertTo.text)
+                viewModel.getValues(fiat, crypto)
+            }
         }
 
         binding.btnSave.setOnClickListener {
-            val currentPrice = binding.tvResult.text.toString()
-            val crypto = binding.tilConvertFrom.text
-            val fiat = binding.tilConvertTo.text
-            val value = binding.etValue.text.toString()
-            val types = "$value $crypto / $fiat"
-            viewModel.saveToDb(GeckoResponseEntity(types = types, currentPrice = currentPrice))
+            if (!viewModel.swapped) {
+                val currentPrice = binding.tvResult.text.toString()
+                val crypto = binding.tilConvertFrom.text
+                val fiat = binding.tilConvertTo.text
+                val value = binding.etValue.text.toString()
+                val types = "$value $crypto / $fiat"
+                viewModel.saveToDb(GeckoResponseEntity(types = types, currentPrice = currentPrice))
+            } else {
+                val currentCrypto = binding.tvResult.text.toString()
+                val fiat = binding.tilConvertFrom.text
+                val crypto = binding.tilConvertTo.text
+                val value = binding.etValue.text.toString()
+                val types = "$value $fiat / $crypto"
+                viewModel.saveToDb(GeckoResponseEntity(types = types, currentPrice = currentCrypto))
+            }
             binding.btnSave.isEnabled = false
         }
 
@@ -137,6 +156,63 @@ class HomeFragment : Fragment() {
         }
         binding.tvConvertTo.setOnClickListener {
             it.hideSoftKeyboard()
+        }
+
+        // Swap the AutoComplete spinners - From Fiat to Crypto
+        binding.ibSwap.setOnClickListener {
+
+            // Get an array list adapter
+            val (fiatAdapter, cryptoAdapter) = createSpinnerArrayAdapters()
+
+            // Get the values from the TILs
+            val textFrom = binding.tilConvertFrom.text
+            val textTo= binding.tilConvertTo.text
+
+            if (!viewModel.swapped) {
+                viewModel.swapped = true
+
+                // Animate the drop down views so user know they swapped
+                binding.apply {
+                    tilConvertFrom.animate().apply {
+                        duration = 1000
+                        rotationXBy(360f)
+                    }.start()
+                    tilConvertTo.animate().apply {
+                        duration = 1000
+                        rotationXBy(360f)
+                    }.start()
+
+                    // Swap the values in the TILs
+                    tilConvertFrom.text = textTo
+                    tilConvertTo.text = textFrom
+
+                    // Swap the array values on the drop down spinner
+                    tvConvertFrom.setAdapter(fiatAdapter)
+                    tvConvertTo.setAdapter(cryptoAdapter)
+                }
+
+            } else {
+                // Animate the drop down views so user know they swapped
+                binding.apply {
+                    tilConvertFrom.animate().apply {
+                        duration = 1000
+                        rotationXBy(-360f)
+                    }.start()
+                    tilConvertTo.animate().apply {
+                        duration = 1000
+                        rotationXBy(-360f)
+                    }.start()
+
+                    // Swap the values in the TILs
+                    tilConvertFrom.text = textTo
+                    tilConvertTo.text = textFrom
+
+                    // Swap the array values on the drop down spinner
+                    tvConvertFrom.setAdapter(cryptoAdapter)
+                    tvConvertTo.setAdapter(fiatAdapter)
+                }
+                viewModel.swapped = false
+            }
         }
     }
 
@@ -180,25 +256,44 @@ class HomeFragment : Fragment() {
         dialog.dismiss()
         binding.btnSave.isEnabled = true
 
-        // Assign the result to the current price multiplied by the value entered
-        val result = binding.tilValue.text.toDouble() * state.exchangeValue[0].currentPrice
+        if (!viewModel.swapped) {
+            // Assign the result to the current price multiplied by the value entered
+            val result = binding.tilValue.text.toDouble() * state.exchangeValue[0].currentPrice
 
-        // Get the fiat currency according to what the user chose
-        val selectedFiat = binding.tilConvertTo.text
-        val fiat = Fiat.getByName(selectedFiat)
+            // Get the fiat currency according to what the user chose
+            val selectedFiat = binding.tilConvertTo.text
+            val fiat = Fiat.getByName(selectedFiat)
 
-        binding.apply {
-            // Set the result text view with the formatted currency locale
-            tvResult.text = result.formatCurrency(fiat.locale)
+            binding.apply {
+                // Set the result text view with the formatted currency locale
+                tvResult.text = result.formatCurrency(fiat.locale)
 
-            // Set the 24h high and low prices
-            tvHigh.text = state.exchangeValue[0].high24H.formatCurrency(fiat.locale)
-            tvLow.text = state.exchangeValue[0].low24H.formatCurrency(fiat.locale)
+                // Set the 24h high and low prices
+                tvHigh.text = state.exchangeValue[0].high24H.formatCurrency(fiat.locale)
+                tvLow.text = state.exchangeValue[0].low24H.formatCurrency(fiat.locale)
 
-            // Show the views
-            ivUpArrow.visibility = View.VISIBLE
-            ivDownArrow.visibility = View.VISIBLE
-            tv24h.visibility = View.VISIBLE
+                // Show the views
+                ivUpArrow.visibility = View.VISIBLE
+                ivDownArrow.visibility = View.VISIBLE
+                tv24h.visibility = View.VISIBLE
+                tvLow.visibility = View.VISIBLE
+                tvHigh.visibility = View.VISIBLE
+            }
+        } else {
+            // Assign the result to the value divided by the current price
+            val result = binding.tilValue.text.toDouble() / state.exchangeValue[0].currentPrice
+
+            binding.apply {
+                // Set the result text view with the result
+                tvResult.text = resources.getString(R.string.formatted_result, result)
+
+                // Hide the views
+                ivUpArrow.visibility = View.GONE
+                ivDownArrow.visibility = View.GONE
+                tv24h.visibility = View.GONE
+                tvLow.visibility = View.GONE
+                tvHigh.visibility = View.GONE
+            }
         }
     }
 

@@ -165,11 +165,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/half_padding"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
             app:layout_constraintEnd_toStartOf="@+id/tv_24h"
             app:layout_constraintStart_toEndOf="@+id/iv_up_arrow"
             app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
-            tools:text="$2,800.43" />
+            tools:text="$2,800.43"
+            tools:visibility="visible" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_24h"
@@ -191,11 +193,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/half_padding"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/iv_up_arrow"
             app:layout_constraintEnd_toStartOf="@+id/iv_down_arrow"
             app:layout_constraintStart_toEndOf="@+id/tv_24h"
             app:layout_constraintTop_toTopOf="@id/iv_up_arrow"
-            tools:text="$1,888" />
+            tools:text="$1,888"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/iv_down_arrow"
