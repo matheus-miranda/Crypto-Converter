@@ -181,6 +181,10 @@ class HomeFragment : Fragment() {
                         duration = 1000
                         rotationXBy(360f)
                     }.start()
+                    ibSwap.animate().apply {
+                        duration = 1000
+                        rotationYBy(360f)
+                    }.start()
 
                     // Swap the values in the TILs
                     tilConvertFrom.text = textTo
@@ -201,6 +205,10 @@ class HomeFragment : Fragment() {
                     tilConvertTo.animate().apply {
                         duration = 1000
                         rotationXBy(-360f)
+                    }.start()
+                    ibSwap.animate().apply {
+                        duration = 1000
+                        rotationYBy(-360f)
                     }.start()
 
                     // Swap the values in the TILs
