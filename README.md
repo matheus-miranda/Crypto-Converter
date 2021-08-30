@@ -8,7 +8,7 @@ This app uses the public <a href="https://www.coingecko.com/en/api">ConGecko API
 Uses Retrofit, Koin, Coroutines, Flow, LiveData, ViewModel, Fragments, Navigation and Room.
 
 ## Updates
-30/Aug - Working on instrumentation and unit tests (<a href="https://github.com/matheus-miranda/Crypto-Converter/issues/1">issue #1</a>)
+30/Aug - Working on instrumentation and unit tests (<a href="https://github.com/matheus-miranda/Crypto-Converter/issues/1">issue #1</a>) - testing branch
 
 ## Features
 - Enter any value and choose the currencies to convert<br />
