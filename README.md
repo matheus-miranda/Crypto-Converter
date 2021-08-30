@@ -7,6 +7,9 @@ Built on Clean Architecture
 This app uses the public <a href="https://www.coingecko.com/en/api">ConGecko API</a> to convert Fiat currency to Crypto currency and vice-versa.<br />
 Uses Retrofit, Koin, Coroutines, Flow, LiveData, ViewModel, Fragments, Navigation and Room.
 
+## Updates
+30/Aug - Working on instrumentation and unit tests (<a href="https://github.com/matheus-miranda/Crypto-Converter/issues/1">issue #1</a>)
+
 ## Features
 - Enter any value and choose the currencies to convert<br />
 - Result can be saved<br />
