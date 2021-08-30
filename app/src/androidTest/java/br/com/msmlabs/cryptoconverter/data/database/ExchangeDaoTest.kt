@@ -21,9 +21,8 @@ import org.junit.runner.RunWith
 @SmallTest
 class ExchangeDaoTest {
 
-    // Needed due to asynchronous code
     @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    var instantTaskExecutorRule = InstantTaskExecutorRule() // Needed due to asynchronous code
 
     private lateinit var database: AppDatabase
     private lateinit var dao: ExchangeDao
@@ -49,6 +48,17 @@ class ExchangeDaoTest {
 
         val allSearchResponses = dao.getAllFromDb().first()
 
-        assertThat(allSearchResponses.contains(searchQuery))
+        assertThat(allSearchResponses).contains(searchQuery)
+    }
+
+    @Test
+    fun deleteAllFromDb() = runBlockingTest {
+        val searchQuery = GeckoResponseEntity(id = 1L, types = "btc/brl", currentPrice = "$1000")
+        dao.saveToDb(searchQuery)
+
+        dao.deleteAllFromDb()
+        val allSearchResponses = dao.getAllFromDb().first()
+
+        assertThat(allSearchResponses).doesNotContain(searchQuery)
     }
 }
